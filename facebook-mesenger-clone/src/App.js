@@ -9,7 +9,10 @@ import './App.css';
 
 function App() {
   const [input, setInput]=useState('');
-  const [messages, setMessages] =useState(['Hellow','Hi','whatsup']);
+  const [messages, setMessages] =useState([
+    {username: 'malik' , text: 'hey guys'},
+    {username:'ehtish', text: 'whats up'}
+  ]);
   const [username, setUsername] = useState('');
 
   //useState = temporary memory which dissapper when page refreshes
@@ -26,7 +29,7 @@ function App() {
   //console.log(messages);
   const sendMessage=(event) => {
     event.preventDefault();
-    setMessages([...messages, input]);
+    setMessages([...messages, {username: username, text: input }]);
     setInput('');
   }
   return (
@@ -46,7 +49,7 @@ function App() {
 
       {
         messages.map(message => (
-          <Message text={message}/>
+          <Message username={username} message={message}/>
         ))
       }
       
