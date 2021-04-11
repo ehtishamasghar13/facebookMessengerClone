@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import  Button from '@material-ui/core/Button';
 import FormControl  from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
@@ -10,6 +10,18 @@ import './App.css';
 function App() {
   const [input, setInput]=useState('');
   const [messages, setMessages] =useState(['Hellow','Hi','whatsup']);
+  const [username, setUsername] = useState('');
+
+  //useState = temporary memory which dissapper when page refreshes
+  //userEffect= run a snippet of code when condition met in REACT
+
+  useEffect(() => {
+    // run code her
+      // if its blank inside [], this code runs once when app components loads
+     setUsername (prompt('Please enter your name....'))
+     
+  }, [])  // condition
+
   //console.log(input);
   //console.log(messages);
   const sendMessage=(event) => {
@@ -20,6 +32,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hellow programmers</h1>
+      <h2>Welcome {username}</h2>
       <form>
       <FormControl>
         <InputLabel >Enter a message...</InputLabel>
