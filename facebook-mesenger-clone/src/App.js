@@ -5,6 +5,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel'
 import Message from './Message'
 import './App.css';
+import db from './Firebase';
+import firebase from 'firebase';
 
 
 function App() {
@@ -19,6 +21,13 @@ function App() {
   //userEffect= run a snippet of code when condition met in REACT
 
   useEffect(() => {
+    db.collection('messages')
+    .orderBy('timestamp', 'desc')
+    .onSnapshot(snapshot =>{
+      setMessages(snapshot.docs.map(doc => doc.data()))
+    })
+  }, [])
+  useEffect(() => {
     // run code her
       // if its blank inside [], this code runs once when app components loads
      setUsername (prompt('Please enter your name....'))
@@ -29,8 +38,13 @@ function App() {
   //console.log(messages);
   const sendMessage=(event) => {
     event.preventDefault();
-    setMessages([...messages, {username: username, text: input }]);
-    setInput('');
+    db.collection('messages').add({
+      message: input,
+      username: username,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    // setMessages([...messages, {username: username, text: input }]);
+     setInput('');
   }
   return (
     <div className="App">
